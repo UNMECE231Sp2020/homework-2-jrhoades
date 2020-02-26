@@ -3,43 +3,32 @@
 //Class declarations
 class Complex {
 	private:
-		struct complex_ {
-			double real;
-			double imag;
-		};
-		typedef struct complex_ Complex1;
-	
+		double _real;
+		double _imag;
 	public:
+
 		Complex();
 		Complex(double real, double imag);
-		Complex(const Complex &Complex);
-		~Complex();
+		Complex(const Complex &value);
 
-		double real() const;
-		double imag() const;
-		size_t size() const;
+		double real();
+		double imag();
 		void print();
 
-		void add(double c1, double c2);
-		void sub(double value);
-		void mult(double value);
-		void div(double value);
-		
-		void conj(double value);
-		void mag(double value);
-		void phase(double value);
+		Complex add(Complex a);
+		Complex sub(Complex b);
+		Complex mult(Complex c);
+		Complex div(Complex d);
+	
+		double magnitude();
+		double phase();
 
-		bool empty();
-};
+		Complex operator+ (Complex v);
+		Complex operator- (Complex v);
+		Complex operator* (Complex v);
+		Complex operator/ (Complex v);
+		Complex operator= (Complex v);
 
-
-
-/*
-void hdler_a(Complex(*complex_fn)(Complex, Complex), Complex c1, Complex c2);
-
-
-void hdler_b(double (*complex_fn)(Complex),Complex c1);
-*/
-
-
-                                                          
+		friend std::ostream& operator<<(std::ostream &out, const Complex v);
+		friend std::istream& operator>>(std::istream &in, Complex &v);
+};                     

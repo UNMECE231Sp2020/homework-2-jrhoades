@@ -1,172 +1,129 @@
 //con_fun.cpp
 #include <iostream>
 #include "declarations.h"
+#include<cmath>
 
- class Complex {
-	private:		
-		double _real;
-		double _imag;
-	public:
-		Complex() : _real(0), _imag(0){
-		}
+Complex::Complex() {
+       	 _real = 0;
+	 _imag = 0;
+}
 		
-		Complex(double real,double imag);{
-			_real = real;
-			_imag = imag;
-		}
+Complex::Complex(double real,double imag) {
+	_real = real;
+	_imag = imag;
+}
 
-		Complex(const Complex &value){
-		       _real = value._real;
-	       	       _imag = value._imag;
-		}	       
+Complex::Complex(const Complex &value) {
+	_real = value._real;
+	_imag = value._imag;
+}	       
 	       
-		~Complex(){
-			;
-		}
-		
-		void set(double real, double imag){
-			_real = real;
-			_imag = imag;
-		}
-		double real() {
-			return _real;
-		}
-		double imag() {
-			return _imag;
-		}
-
-		void print() {
-			std::cout<< "real: "<< _real << "imag: " << _imag << std::endl;
-		}
-		
-		Complex operator+(Complex value) {
-			Complex temp = add(value);
-			//temp._real = _real + value._real;
-			//temp._imag = _imag + value._imag;
-			
-			return temp;
-		}
-			
-		Complex operator-(Complex value) {
-			Complex temp = sub(value);
-			//temp._real = _real - value._real;
-			//temp._imag = _imag - value._imag;
-			
-			return temp;
-		}
-
-
-		Complex operator*(Complex value) {
-			Complex temp = mult(value);
-			//temp._real = _real * value._real;
-			//temp._imag = _imag * value._imag;
-			
-			return temp;
-		}
-
-
-		Complex operator/(Complex value) {
-			Complex temp = div(value);
-			//temp._real = _real / value._real;
-			//temp._imag = _imag / value._imag;
-			
-			return temp;
-		}
 	
-		Complex operator=(Complex value) {
-			Complex temp;
-			temp._real = _real;
-			temp._imag = _imag;
-			
-			return *this;
-		}
-		
-		bool operator !=(Complex value) {
-			return ( (_real != value._real) && \
-				 (_imag != value._imag) );
-		}
-
-		
-		bool operator ==(Complex value) {
-			return ( (_real == value._real) && (_imag == value._imag) );
-		}
-
-		friend std::ostream& operator<<(std::ostream &out, const Complex &v) {
-			out << v._real << " " << v._imag;
-
-			return out;
-		}
-		friend std::istream& operator>>(std::istream &in, const Complex &v) {
-			in >> v._real >> v._imag;
-
-			return in;
-		}
-
-		bool empty();
-};
-
-
-void Complex::print_complex(Complex c){
-	if(c.imag < 0){
-		printf("%.3lf - %.3lf\n", c.real, -c.imag);
-	}
-	else{
-		printf("%.3lf + %.3lf\n", c.real, c.imag);
-	      }
+double Complex::real() {
+	return _real;
 }
 
-Complex add(Complex c1, Complex c2) {
-	Complex c = {c1.real+c2.real, c1.imag+c2.imag};
-	return c;
+double Complex::imag() {
+	return _imag;
 }
 
-
-Complex sub(Complex c1, Complex c2) {
-	Complex c = {c1.real-c2.real, c1.imag-c2.imag};
-	return c;
+void Complex::print() {
+	std::cout<< "real: "<<_real << "imag: " <<_imag << std::endl;
 }
 
-Complex complex_mult(Complex c1, Complex c2) {
-	Complex c = {(c1.real*c2.real)+(c1.imag*c2.imag*-1),(c1.imag*c2.real)+(c1.real*c2.imag)};
-	return c;
+Complex Complex::add(Complex a) {
+	Complex value_add;
+	value_add._real = _real + a._real;
+	value_add._imag = _imag + a._imag;
+	return value_add;
 }
-
-Complex complex_div(Complex c1, Complex c2){
-	double denom = magnitude(c2)*magnitude(c2);
-	Complex c = complex_mult(c1, complex_conj(c2));
-	c.real /= denom;
-	c.imag /= denom;
 	
-	if(denom==0){						
-		std::cout<<"You know what a chazzer is? It's a pig that can't divide by a 0. And so can't you!"<<c std::endl;
+Complex Complex::sub(Complex b) {
+	Complex value_sub;
+	value_sub._real = _real - b._real;
+	value_sub._imag = _imag - b._imag;
+	return value_sub;
+}
+	
+Complex Complex::mult(Complex c) {
+	Complex value_mult;
+	value_mult._real = (_real * c._real) - (_real * c._imag);
+	value_mult._imag = (_imag * c._imag) + (_imag * c._real);
+	return value_mult;
+}
+	
+Complex Complex::div(Complex d) {
+	Complex value_div;
+	double denom = pow(d._real,2) + pow(d._imag,2);
+	if (denom == 0) {
+		std::cout << "You know what a chazzer is? It's a pig that cant divide by zero, and so can't you." << std::endl;
+		value_div._real = 0;
+		value_div._imag = 0;
+		return value_div;
 	}
-	else{		
-		return c;
-	 }
+	value_div._real = ((_real*d._real) + (_imag*d._imag)) / denom;
+	value_div._imag = ((_imag*d._real) + (_real*d._imag)) / denom;
+	return value_div;
 }
 
-Complex complex_conj(Complex c){
-	c.imag *= -1;
-	return c;
+Complex Complex::magnitude() {
+	double magnitude;
+	magnitude = sqrt(pow(_real,2) + pow(_imag,2));
+	return magnitude;
 }
-
-
-double magnitude(Complex c){
-	return sqrt((c.real*c.real) + (c.imag*c.imag));
-}
-
-double phase(Complex c){
-	double ph = atan(c.imag/c.real);
+	
+Complex Complex::phase(Complex a) {
+	double ph = atan(a._imag/a._real);
 	ph = ph * (180/M_PI);
 	return (ph<0) ? -ph : ph;
+}		
+
+Complex Complex::operator+ (Complex v) {
+	Complex temp = add(v);
+	//temp._real = _real + value._real;
+	//temp._imag = _imag + value._imag;
+		
+	return temp;
+}
+			
+Complex Complex::operator- (Complex v) {
+	Complex temp = sub(v);
+	//temp._real = _real - value._real;
+	//temp._imag = _imag - value._imag;
+			
+	return temp;
 }
 
-/*
-void hdler_a(Complex (*complex_fn)(Complex, Complex), Complex c1, Complex c2){
-	printf("%lf %lf\n", complex_fn(c1,c2).real, complex_fn(c1,c2).imag);
+
+Complex Complex::operator* (Complex v) {
+	Complex temp = mult(v);
+	//temp._real = _real * value._real;
+	//temp._imag = _imag * value._imag;
+			
+	return temp;
 }
 
-void hdler_b(double (*complex_fn)(Complex), Complex c1){
-	printf("%lf \n", complex_fn(c1));
-}*/ 
 
+Complex Complex::operator/ (Complex v) {
+	Complex temp = div(v);
+	//temp._real = _real / value._real;
+	//temp._imag = _imag / value._imag;
+			
+	return temp;
+}
+	
+Complex Complex::operator= (Complex v) {
+	_real = v._real;
+	_imag = v._imag;	
+	return *this;
+}
+
+std::ostream& operator<<(std::ostream &out, const Complex v) {
+	out << v.real << " " << v.imag;
+	return out;
+}
+
+std::istream& operator>>(std::istream &in, const Complex v) {
+	in >> v.real >> v.imag;
+	return in;
+}
