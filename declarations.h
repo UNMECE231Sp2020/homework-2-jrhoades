@@ -2,14 +2,14 @@
 #include <iostream>
 //Class declarations
 class Complex {
-	private:
+	public:
 		double _real;
 		double _imag;
-	public:
 
 		Complex();
 		Complex(double real, double imag);
-		Complex(const Complex &value);
+		Complex(double real);
+		Complex(const Complex &Value);
 
 		double real();
 		double imag();
@@ -19,7 +19,8 @@ class Complex {
 		Complex sub(Complex b);
 		Complex mult(Complex c);
 		Complex div(Complex d);
-	
+
+		Complex conjugate();	
 		double magnitude();
 		double phase();
 
@@ -29,6 +30,6 @@ class Complex {
 		Complex operator/ (Complex v);
 		Complex operator= (Complex v);
 
-		friend std::ostream& operator<<(std::ostream &out, const Complex v);
-		friend std::istream& operator>>(std::istream &in, Complex &v);
+		friend std::ostream& operator<<(std::ostream &out, const Complex Value);
+		friend std::istream& operator>>(std::istream &in, Complex &Value);
 };                     

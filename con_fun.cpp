@@ -13,12 +13,16 @@ Complex::Complex(double real,double imag) {
 	_imag = imag;
 }
 
-Complex::Complex(const Complex &value) {
-	_real = value._real;
-	_imag = value._imag;
+Complex::Complex(double real) {
+	_real = real;
+	_imag = 0;
+}
+
+Complex::Complex(const Complex &Value) {
+	_real = Value._real;
+	_imag = Value._imag;
 }	       
 	       
-	
 double Complex::real() {
 	return _real;
 }
@@ -28,7 +32,7 @@ double Complex::imag() {
 }
 
 void Complex::print() {
-	std::cout<< "real: "<<_real << "imag: " <<_imag << std::endl;
+	std::cout<< "real: "<<_real<< "imag: " <<_imag<< std::endl;
 }
 
 Complex Complex::add(Complex a) {
@@ -66,14 +70,22 @@ Complex Complex::div(Complex d) {
 	return value_div;
 }
 
-Complex Complex::magnitude() {
-	double magnitude;
-	magnitude = sqrt(pow(_real,2) + pow(_imag,2));
-	return magnitude;
+Complex Complex::conjugate() {
+	Complex value_conj;
+	value_conj._real = _real;
+	value_conj._imag = (_imag)/(-1);
+	return value_conj;
+}
+
+double Complex::magnitude() {
+	double mag;
+	mag = sqrt(pow(_real,2) + pow(_imag,2));
+	return mag;
 }
 	
-Complex Complex::phase(Complex a) {
-	double ph = atan(a._imag/a._real);
+double Complex::phase() {
+	Complex value_phase;
+	double ph = atan(value_phase._imag/value_phase._real);
 	ph = ph * (180/M_PI);
 	return (ph<0) ? -ph : ph;
 }		
@@ -118,12 +130,12 @@ Complex Complex::operator= (Complex v) {
 	return *this;
 }
 
-std::ostream& operator<<(std::ostream &out, const Complex v) {
-	out << v.real << " " << v.imag;
+std::ostream& operator<<(std::ostream &out, const Complex Value) {
+	out << Value._real << " " << Value._imag;
 	return out;
 }
 
-std::istream& operator>>(std::istream &in, const Complex v) {
-	in >> v.real >> v.imag;
+std::istream& operator>>(std::istream &in, const Complex &Value) {
+	in >> Value._real >> Value._imag;
 	return in;
 }
