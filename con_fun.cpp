@@ -17,7 +17,14 @@ Complex::Complex(double real) {
 	_real = real;
 	_imag = 0;
 }
-
+void Complex::print() {
+	char sign;
+	if(_imag>=0)
+		sign = '+';
+	else
+		sign = '-';
+	std::cout<<_real<<sign<<abs(_imag)<<'j'<<std::endl;
+}
 Complex::Complex(const Complex &Value) {
 	_real = Value._real;
 	_imag = Value._imag;
@@ -31,42 +38,42 @@ double Complex::imag() {
 	return _imag;
 }
 
-void Complex::print() {
-	std::cout<< "real: "<<_real<< "imag: " <<_imag<< std::endl;
-}
+//void Complex::print() {
+//	std::cout<< " "<<_real<< " " <<_imag<< std::endl;
+//}
 
 Complex Complex::add(Complex a) {
 	Complex value_add;
-	value_add._real = _real + a._real;
-	value_add._imag = _imag + a._imag;
+	value_add._real = (_real)+(a._real);
+	value_add._imag = (_imag)+(a._imag);
 	return value_add;
 }
 	
 Complex Complex::sub(Complex b) {
 	Complex value_sub;
-	value_sub._real = _real - b._real;
-	value_sub._imag = _imag - b._imag;
+	value_sub._real = (_real)-(b._real);
+	value_sub._imag = (_imag)-(b._imag);
 	return value_sub;
 }
 	
 Complex Complex::mult(Complex c) {
 	Complex value_mult;
-	value_mult._real = (_real * c._real) - (_real * c._imag);
-	value_mult._imag = (_imag * c._imag) + (_imag * c._real);
+	value_mult._real = (_real * c._real)-(_imag * c._imag);
+	value_mult._imag = (_real * c._imag)+(_imag * c._real);
 	return value_mult;
 }
 	
 Complex Complex::div(Complex d) {
 	Complex value_div;
-	double denom = pow(d._real,2) + pow(d._imag,2);
+	double denom = ((pow(d._real,2))+(pow(d._imag,2)));
 	if (denom == 0) {
-		std::cout << "You know what a chazzer is? It's a pig that cant divide by zero, and so can't you." << std::endl;
+		std::cout << "You know what a chazzer is? It's a pig that can't divide by zero, and neither can you." << std::endl;
 		value_div._real = 0;
 		value_div._imag = 0;
 		return value_div;
 	}
-	value_div._real = ((_real*d._real) + (_imag*d._imag)) / denom;
-	value_div._imag = ((_imag*d._real) + (_real*d._imag)) / denom;
+	value_div._real = ((_real)*(d._real)+(_imag)*(d._imag))/(denom);
+	value_div._imag = ((_imag)*(d._real)-(_real)*(d._imag))/(denom);
 	return value_div;
 }
 
@@ -79,13 +86,12 @@ Complex Complex::conjugate() {
 
 double Complex::magnitude() {
 	double mag;
-	mag = sqrt(pow(_real,2) + pow(_imag,2));
+	mag = sqrt(pow(_real,2)+pow(_imag,2));
 	return mag;
 }
 	
 double Complex::phase() {
-	Complex value_phase;
-	double ph = atan(value_phase._imag/value_phase._real);
+	double ph = atan(_imag/_real);
 	ph = ph * (180/M_PI);
 	return (ph<0) ? -ph : ph;
 }		
@@ -131,11 +137,11 @@ Complex Complex::operator= (Complex v) {
 }
 
 std::ostream& operator<<(std::ostream &out, const Complex Value) {
-	out << Value._real << " " << Value._imag;
+	out << Value._real << "  " << Value._imag;
 	return out;
 }
 
-std::istream& operator>>(std::istream &in, const Complex &Value) {
+std::istream& operator>>(std::istream &in, Complex &Value) {
 	in >> Value._real >> Value._imag;
 	return in;
 }

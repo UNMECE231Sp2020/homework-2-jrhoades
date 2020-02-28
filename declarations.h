@@ -2,13 +2,15 @@
 #include <iostream>
 //Class declarations
 class Complex {
-	public:
+	private:
 		double _real;
 		double _imag;
 
+	public:
 		Complex();
 		Complex(double real, double imag);
 		Complex(double real);
+		void Display();
 		Complex(const Complex &Value);
 
 		double real();

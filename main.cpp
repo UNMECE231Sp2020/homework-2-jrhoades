@@ -37,8 +37,8 @@ int main() {
 	std::cout << "Magnitude: " << c4.magnitude() << " should be 13" << std::endl;
 
 	//Phase
-	std::cout << "Phase: " << c3.phase() << " should be 53.1301" << std::endl;
-	std::cout << "Phase: " << c4.phase() << " should be 67.3801" << std::endl;
+	std::cout << "Phase:  " << c3.phase() << " should be 53.1301" << std::endl;
+	std::cout << "Phase:  " << c4.phase() << " should be 67.3801" << std::endl;
 
 	std::cout << "Testing overloaded operators" << std::endl;
 
