@@ -18,12 +18,11 @@ Complex::Complex(double real) {
 	_imag = 0;
 }
 void Complex::print() {
-	char sign;
 	if(_imag>=0)
-		sign = '+';
+		std::cout<<_real<<'+'<<_imag<<'j'<<std::endl;
 	else
-		sign = '-';
-	std::cout<<_real<<sign<<abs(_imag)<<'j'<<std::endl;
+		std::cout<<_real<<'-'<<_imag*-1<<'j'<<std::endl;
+		
 }
 Complex::Complex(const Complex &Value) {
 	_real = Value._real;
@@ -74,6 +73,7 @@ Complex Complex::div(Complex d) {
 	}
 	value_div._real = ((_real)*(d._real)+(_imag)*(d._imag))/(denom);
 	value_div._imag = ((_imag)*(d._real)-(_real)*(d._imag))/(denom);
+
 	return value_div;
 }
 
